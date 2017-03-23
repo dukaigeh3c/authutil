@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//auth/account/account.py=UTF-8
+encoding//auth/onekey/onekey.py=UTF-8
+encoding//auth/sms/sms.py=UTF-8
+encoding//auth/test.py=UTF-8
+encoding//auth/wxoauth/wxoauth.py=UTF-8
+encoding//util/authutil.py=UTF-8

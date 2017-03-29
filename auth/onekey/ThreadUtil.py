@@ -44,7 +44,7 @@ def getAccessTokenUrl(loginurl,authurl,usermac,userip,storeId,ssid):
     getAccessTokenUrl = ("http://%s/portal/protocol?response_type=access_token&usermac=%s&userip=%s&code=%s") % (e1.get(),usermac,userip,code)
     return getAccessTokenUrl
 # 请求code
-def onekey(authurl,usermac,userip,storeId,ssid):
+def onekeytest(authurl,usermac,userip,storeId,ssid):
     passParam = authutil.validateParam(authurl,usermac,userip,storeId,ssid)
     if passParam == 1:
         return 'error'
@@ -110,9 +110,9 @@ v2.set(storeId)
 v3.set(ssid)
 v4.set(threadNo)
 
-failSum = 0;
 
 def threadAuth():
+    failSum = 0;
     authurl = e1.get()
     storeId = e2.get()
     ssid = e3.get()
@@ -121,7 +121,7 @@ def threadAuth():
     iplist = authutil.getIpList(int(threadNo))
     for i in range(0,int(threadNo)):
         result = ""
-        thread.start_new_thread( result=onekey, (authurl,maclist[i],iplist[i],int(storeId),ssid) )
+        thread.start_new_thread(onekeytest, (authurl,maclist[i],iplist[i],int(storeId),ssid) )
         if result == 'error':
             failSum = failSum + 1
     print '失败次数'+str(failSum)

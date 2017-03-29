@@ -44,7 +44,7 @@ def accountLogin(loginurl,domain):
         authutil.updateDefaut("account.ini","storeId",e4.get())
         authutil.updateDefaut("account.ini","ssid",e5.get())
         authutil.updateDefaut("account.ini","userName",e6.get())
-        authutil.updateDefaut("signature",e7.get())
+        authutil.updateDefaut("account.ini","signature",e7.get())
         authurl = ("http://%s/portal/login") % (domain)
         data = {}
         data['nas_id'] = loginurl.split("&ssid=")[0].split("&nas_id=")[1]

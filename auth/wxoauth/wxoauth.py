@@ -29,6 +29,7 @@ def getAccessTokenUrl(loginurl):
     return getAccessTokenUrl
 
 def doAuthToWeixinServer(loginurl):
+    print loginurl
     if int(loginurl.find("Error")) != -1:
         openWxLable.config(text="登录重定向错误：" + str(loginurl))
     elif loginurl.find("?code=") != -1:

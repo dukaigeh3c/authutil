@@ -110,6 +110,8 @@ v2.set(storeId)
 v3.set(ssid)
 v4.set(threadNo)
 
+failSum = 0;
+
 def threadAuth():
     authurl = e1.get()
     storeId = e2.get()
@@ -118,9 +120,11 @@ def threadAuth():
     maclist = authutil.getMACList(int(threadNo))
     iplist = authutil.getIpList(int(threadNo))
     for i in range(0,int(threadNo)):
-        thread.start_new_thread( onekey, (authurl,maclist[i],iplist[i],int(storeId),ssid) )
-
-
+        result = ""
+        thread.start_new_thread( result=onekey, (authurl,maclist[i],iplist[i],int(storeId),ssid) )
+        if result == 'error':
+            failSum = failSum + 1
+    print '失败次数'+str(failSum)
 
 Tkinter.Button(root, text='认证', width=10, command=threadAuth).grid(row=6, column=0, sticky=Tkinter.W, padx=10, pady=5)  # 设置 button 指定 宽度 , 并且 关联 函数 , 使用表格式布局 . 
 Tkinter.Button(root, text='退出', width=10, command=root.quit).grid(row=6, column=1, sticky=Tkinter.E, padx=10, pady=5)

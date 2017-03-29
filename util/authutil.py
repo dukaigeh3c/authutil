@@ -82,4 +82,3 @@ def getIpList(size):
         if index == size-1:
             return ipList
         index = index+1
-

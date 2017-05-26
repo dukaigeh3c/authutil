@@ -5,6 +5,8 @@ Created on 2017年3月8日
 @author: dkf6498
 '''
 from util import authutil
+from util import CommonUtil
+
 import json
 import time  
 import Tkinter  # import the Tkinter module
@@ -16,7 +18,7 @@ Tkinter.Label(root, text='域名 :').grid(row=0, column=0)
 Tkinter.Label(root, text='storeId :').grid(row=1, column=0)  
 Tkinter.Label(root, text='ssid:').grid(row=2, column=0)
 Tkinter.Label(root, text='并发数:').grid(row=3, column=0)
-
+logger = CommonUtil.getLogger('ThreadUtil')
 #拼接获取code的url
 def getCodeUrl(loginurl):
     if int(loginurl.find("Error")) != -1:
@@ -60,26 +62,33 @@ def onekeytest(authurl,usermac,userip,storeId,ssid):
     #拼接获取code的url
     getcodeUrl = getCodeUrl(loginurl)
     print "getcodeUrl is ",getcodeUrl
+    logger.info(getcodeUrl)
     #请求code
     response = authutil.do_get(getcodeUrl,e1.get())
     loginurl = response.getheader("Location")
     print "Location url is",loginurl
+    logger.info(loginurl)
     #获取accesstoken url
     accessTokenUrl = getAccessTokenUrl(loginurl,authurl,usermac,userip,storeId,ssid)
     print "get accessToken url is ",accessTokenUrl
+    logger.info(accessTokenUrl)
     #获取accesstoken
     accessTokenInfo = authutil.do_get(accessTokenUrl,e1.get()).read()
     print accessTokenInfo
+    logger.info(accessTokenInfo)
     accessTokenObj = json.loads(accessTokenInfo)
     accesstoken = accessTokenObj["access_token"]
     #获取用户信息
     getUserInfoUrl = ("http://%s/portal/protocol?response_type=userinfo&access_token=%s") % (e1.get(),accesstoken)
     userinfo = authutil.do_get(getUserInfoUrl,e1.get()).read()
     print userinfo
+    logger.info(userinfo)
     if int(userinfo.find("Success")) != -1:
+        logger.info("ok")
         print 'ok'
         return 'ok'
     else:
+        logger.info("error")
         print 'error'
         return 'error'
         

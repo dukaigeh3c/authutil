@@ -44,6 +44,7 @@ def doAuthToWeixinServer(loginurl):
         userip = loginurl.split("&userurl=")[0].split("&userip=")[1]
         userurl = loginurl.split("&apmac=")[0].split("&userurl=")[1]
         authUrl = ("http://%s/portal/wifilogin.jsp?nas_id=%s&redirect_uri=%s&ssid=%s&templateId=%s&userip=%s&usermac=%s&userurl=%s") % (e1.get(),nas_id,redirect_uri,ssid,templateId,userip,usermac,userurl)
+        print authUrl
         openWxLable.config(text=("拉起微信客戶端的url " + str(authUrl)))
         #向authurl發起認證
         data=("nas_id=%s&redirect_uri=%s&ssid=%s&userip=%s&usermac=%s") % (nas_id,redirect_uri,ssid,userip,usermac)
@@ -54,6 +55,7 @@ def doAuthToWeixinServer(loginurl):
         extend = base64.b64encode(bytesString)
         auth_url=("http://%s/weixinwifi/clientauth?openId=%s&tid=%s&extend=%s") % (e1.get(),e6.get(),e7.get(),extend)
         #发送认证请求
+        print auth_url
         res = authutil.do_get(auth_url,str(e1.get()))
         return res.getheader('Location')
 
@@ -75,6 +77,7 @@ def wechat():
     res = authutil.do_get(authurl, e1.get())
     # 重定向到登录页面
     loginurl = res.getheader('Location')
+    print loginurl
     if loginurl.find('60017') != -1:
         openWxLable.config(text=("认证失败 " + str(loginurl)))
         return

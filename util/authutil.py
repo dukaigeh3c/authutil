@@ -20,6 +20,12 @@ def updateDefaut(fileName,param,newparam):
     config.read(fileName)
     config.set("ZIP", param, newparam) #这样md5就从1234变成kingsoft了
     config.write(open(fileName, "r+"))
+    
+def printLog(message):
+    config = ConfigParser.ConfigParser()
+    config.read("thread.ini")
+    config.set("LOG",message)
+    config.write(open("thread.log", "w"))
 # 发送get请求
 def do_get(authurl, domain):
     conn = httplib.HTTPConnection(domain)
